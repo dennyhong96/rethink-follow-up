@@ -1,23 +1,46 @@
-import { Folder, File } from "./icons";
+import { memo, useState } from "react";
+import { Folder, File, Arrow } from "./icons";
 import { StyledFileNode } from "./styles";
 
 const FileNode = ({ file, onSelectFile }) => {
+	const [isOpen, setIsOpen] = useState(false);
+
 	return (
-		<StyledFileNode type={file.type} onClick={() => onSelectFile(file.name)}>
+		<StyledFileNode
+			tabIndex={0}
+			type={file.type}
+			isOpen={isOpen}
+			onClick={
+				file.type === "FILE"
+					? evt => {
+							evt.stopPropagation();
+							onSelectFile(file.path);
+					  }
+					: evt => {
+							evt.stopPropagation();
+							setIsOpen(prev => !prev);
+					  }
+			}
+		>
 			{/* Filename */}
-			<p>
-				{file.type === "FOLDER" ? <Folder /> : <File />} {file.name}
-			</p>
+			<div>
+				<div className="">
+					{file.type === "FOLDER" ? <Folder /> : <File />} {file.name}
+				</div>
+				{file.type === "FOLDER" && <Arrow />}
+			</div>
 
 			{/* Children of the folder */}
-			<div>
-				{file.type === "FOLDER" &&
-					file.children.map(childFile => (
-						<FileNode key={childFile.name} file={childFile} onSelectFile={onSelectFile} />
-					))}
-			</div>
+			{isOpen && (
+				<div>
+					{file.type === "FOLDER" &&
+						file.children.map(childFile => (
+							<FileNode key={childFile.path} file={childFile} onSelectFile={onSelectFile} />
+						))}
+				</div>
+			)}
 		</StyledFileNode>
 	);
 };
 
-export default FileNode;
+export default memo(FileNode);

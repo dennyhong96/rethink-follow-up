@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const StyledFileNode = styled.div`
-	margin-left: 3rem;
+	margin-left: 2rem;
 	cursor: pointer;
 
 	&:focus {

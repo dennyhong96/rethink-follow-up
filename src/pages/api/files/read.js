@@ -7,15 +7,16 @@ export default async function handler(req, res) {
 	const pathName = req.query.path_name;
 
 	try {
-		if (!pathName) throw new Error("Please provide a pathname.");
+		if (!pathName) throw new Error("Please provide a pathname to the file.");
 
-		const parts = pathName.split("/").filter(part => !!part);
+		const parts = pathName.split("/").filter(part => !!part); // part may be empty string, need to filter those out
 
-		const file = await fs.readFile(path.join(ROOT_DIR, ...parts), { encoding: "utf-8" });
+		const pathFromRoot = path.join(ROOT_DIR, ...parts);
+		const file = await fs.readFile(pathFromRoot, { encoding: "utf-8" });
 
 		return res.status(200).json({
 			pathName,
-			fullPath: path.resolve(ROOT_DIR, ...parts),
+			path: pathFromRoot.replace(ROOT_DIR, ""), // Need to get rid of 'ROOT_DIR'(_drive) because in actual file system the files live in '/_drive'
 			content: file,
 		});
 	} catch (error) {

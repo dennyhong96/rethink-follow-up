@@ -40,14 +40,14 @@ async function listFiles(startDir) {
 
 	return await Promise.all(
 		parentDir.map(async child => {
-			const fullPath = path.resolve(startDir, child.name);
+			const pathFromRoot = path.join(startDir, child.name);
 			const isDir = child.isDirectory();
 
 			return {
 				type: isDir ? "FOLDER" : "FILE",
 				name: child.name,
-				fullPath,
-				...(isDir && { children: await listFiles(fullPath) }),
+				path: pathFromRoot.replace(ROOT_DIR, ""),
+				...(isDir && { children: await listFiles(pathFromRoot) }),
 			};
 		}),
 	);

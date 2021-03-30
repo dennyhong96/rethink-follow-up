@@ -16,7 +16,6 @@ export default async function handler(req, res) {
 		const file = await fs.readFile(pathFromRoot, { encoding: "utf-8" });
 
 		return res.status(200).json({
-			pathName,
 			path: pathFromRoot.replace(ROOT_DIR, ""), // Need to get rid of 'ROOT_DIR'(_drive) because in actual file system the files live in '/_drive'
 			content: file,
 		});

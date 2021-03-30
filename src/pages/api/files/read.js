@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 
 const ROOT_DIR = "_drive";
 
+// Read that can read and return the content of a file for a given pathname
 export default async function handler(req, res) {
 	const pathName = req.query.path_name;
 

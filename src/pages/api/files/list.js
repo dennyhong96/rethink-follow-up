@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 
 const ROOT_DIR = "_drive";
 
+// List out files for a given pathname, where the root of the folder is represented by /
 export default async function handler(req, res) {
 	const pathName = req.query.path_name;
 
@@ -36,7 +37,7 @@ export default async function handler(req, res) {
 	}
 }
 
-// Recursively read directory, returns an array of objects with file/folder info
+// Recursively read file directory, returns an array of objects with file/folder meta info
 async function getFileTree(startDir) {
 	const parentDir = await fs.readdir(startDir, { encoding: "utf-8", withFileTypes: true });
 

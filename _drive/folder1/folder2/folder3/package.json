@@ -1,0 +1,73 @@
+{
+  "name": "qiskit-js",
+  "scripts": {
+    "start": "node packages/qiskit/bin",
+    "install": "lerna bootstrap",
+    "clean": "lerna clean --yes",
+    "publish": "npm i && lerna publish",
+    "precommit": "lint-staged",
+    "lint": "eslint .",
+    "deps": "depcheck --ignore-dirs=dist --ignores='mocha,lint-staged,prettier,eslint-config-airbnb-base,eslint-config-prettier,eslint-plugin-import' && lerna run deps",
+    "test-algo": "lerna run test --scope @qiskit/algo",
+    "test-algo-js": "lerna run test --scope @qiskit/algo-js",
+    "test-algo-ibm": "lerna run test --scope @qiskit/algo-ibm",
+    "test-algo-anu": "lerna run test --scope @qiskit/algo-anu",
+    "test-qasm": "lerna run test --scope @qiskit/qasm",
+    "test-cloud": "lerna run test --scope @qiskit/cloud",
+    "test-sdk": "lerna run test --scope qiskit",
+    "test-sim": "lerna run test --scope @qiskit/sim",
+    "test-utils": "lerna run test --scope @qiskit/utils",
+    "pretest": "npm i && npm run lint && npm run deps",
+    "test": "lerna run test"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "depcheck": "^0.8.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-import": "^2.17.2",
+    "lerna": "^3.14.1",
+    "lint-staged": "^8.1.7",
+    "mocha": "^6.1.4",
+    "prettier": "^1.17.1",
+    "snap-shot-it": "^7.4.4",
+    "strip-color": "^0.1.0"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "private": true,
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "prettier"
+    ],
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "rules": {
+      "strict": [
+        "off"
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "**/node_modules/*",
+    "dist",
+    "*.jison",
+    "snapshots__",
+    "examples/webpack"
+  ],
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
+  }
+}

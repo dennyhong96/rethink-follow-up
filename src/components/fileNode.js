@@ -5,26 +5,16 @@ import { StyledFileNode } from "./styles";
 const FileNode = ({ file, onSelectFile }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
+	const handleClick = evt => {
+		evt.stopPropagation();
+		file.type === "FILE" ? onSelectFile(file.path) : setIsOpen(prev => !prev);
+	};
+
 	return (
-		<StyledFileNode
-			tabIndex={0}
-			type={file.type}
-			isOpen={isOpen}
-			onClick={
-				file.type === "FILE"
-					? evt => {
-							evt.stopPropagation();
-							onSelectFile(file.path);
-					  }
-					: evt => {
-							evt.stopPropagation();
-							setIsOpen(prev => !prev);
-					  }
-			}
-		>
+		<StyledFileNode tabIndex={0} type={file.type} isOpen={isOpen} onClick={handleClick}>
 			{/* Filename */}
 			<div>
-				<div className="">
+				<div>
 					{file.type === "FOLDER" ? <Folder /> : <File />} {file.name}
 				</div>
 				{file.type === "FOLDER" && <Arrow />}

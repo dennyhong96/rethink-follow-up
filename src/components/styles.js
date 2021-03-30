@@ -43,6 +43,8 @@ export const StyledFileNode = styled.div`
 		& > svg {
 			height: 2rem;
 			height: 2rem;
+			transition: 0.2s ease-out;
+
 			${({ isOpen }) =>
 				isOpen &&
 				css`
